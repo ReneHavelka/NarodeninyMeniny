@@ -11,76 +11,85 @@
         FontSize="16">
 
     <Border Background="GhostWhite" BorderBrush="Black" BorderThickness="1" Width="1400" Margin="0,50,0,0">
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <Grid HorizontalAlignment="Left" Margin="50,50,0,0">
 
-        <Grid HorizontalAlignment="Left" Margin="50,50,0,0">
 
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="40"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="auto"/>
+                </Grid.ColumnDefinitions>
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition Width="auto"/>
-            </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="25"/>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="25"/>
-                <RowDefinition Height="150"/>
-                <RowDefinition Height="auto"/>
-            </Grid.RowDefinitions>
+                <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonZoznam}"  Click="Button_Click_Zoznam"/>
 
-            <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonZoznam}"  Click="Button_Click_Zoznam"/>
+                <TextBlock Text="Oslávenec" Grid.Column="1" Grid.Row="1" FontSize="30" VerticalAlignment="Top" Margin="0,30,0,0"/>
 
-            <TextBlock Text="Oslávenec" Grid.Column="1" Grid.Row="1" FontSize="30" VerticalAlignment="Top" Margin="0,30,0,0"/>
+                <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonZoznam}"  Click="Button_Click_Zoznam"/>
 
-            <Button Grid.Column="1" Grid.Row="0" Style="{StaticResource ButtonZoznam}"  Click="Button_Click_Zoznam"/>
+                <DataGrid x:Name="dataGrid" ItemsSource="{Binding}" Grid.Column="1" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" Height="Auto" Width="Auto">
 
-            <DataGrid x:Name="dataGrid" ItemsSource="{Binding}" Grid.Column="1" Grid.Row="2" AutoGenerateColumns="False" IsReadOnly="True" Height="Auto" Width="Auto">
+                    <DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Meno">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource ColumnTextBlockStyle1}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Meno">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Name}" Style="{StaticResource ColumnTextBlockStyle1}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Priezvisko">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Surname}" Style="{StaticResource ColumnTextBlockStyle1}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="Priezvisko">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Surname}" Style="{StaticResource ColumnTextBlockStyle1}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Familiárne">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding NickName}" Style="{StaticResource ColumnTextBlockStyle1}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="Familiárne">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding NickName}" Style="{StaticResource ColumnTextBlockStyle1}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="D. o.">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Suffix}" Style="{StaticResource ColumnTextBlockStyle1}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-                    <DataGridTemplateColumn Header="Dod. ozn.">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding Suffix}" Style="{StaticResource ColumnTextBlockStyle1}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                    
-                    <DataGridTemplateColumn Header="Sviatok">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <TextBlock Text="{Binding HolidayType}" Style="{StaticResource ColumnTextBlockStyle1}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
-                </DataGrid.Columns>
+                        <DataGridTemplateColumn Header="Sviatok">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding HolidayType}" Style="{StaticResource ColumnTextBlockStyle1}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-            </DataGrid>
+                        <DataGridTemplateColumn Header="Deň">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding AdditionalNote}" Style="{StaticResource ColumnTextBlockStyle2}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
 
-        </Grid>
+                    </DataGrid.Columns>
 
+                </DataGrid>
+
+            </Grid>
+        </ScrollViewer>
     </Border>
 
 </Window>

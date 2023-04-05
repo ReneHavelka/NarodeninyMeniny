@@ -26,7 +26,7 @@ namespace WinUI
 
         private void SetDataContext()
         {
-            var getAllPeople = new GetPeopleWithNamesdays(readDataFile, readCalendar).PeopleWithNamesdays();
+            var getAllPeople = new GetPeopleWithNameDay(readDataFile, readCalendar).PeopleWithNameDay();
 
             DataContext = getAllPeople;
         }

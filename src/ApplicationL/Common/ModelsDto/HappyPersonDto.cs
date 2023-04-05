@@ -7,5 +7,6 @@
         public string NickName { get; set; }
         public string Suffix { get; set; }
         public string HolidayType { get; set; }
+        public string? AdditionalNote { get; set; }
     }
 }

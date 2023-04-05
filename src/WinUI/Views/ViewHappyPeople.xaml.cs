@@ -6,7 +6,7 @@ using System.Windows;
 namespace WinUI.Views
 {
     /// <summary>
-    /// Interaction logic for BrithdayNamesdayPerson.xaml
+    /// Interaction logic for BrithdayNameDayPerson.xaml
     /// </summary>
     public partial class ViewHappyPeople : Window
     {

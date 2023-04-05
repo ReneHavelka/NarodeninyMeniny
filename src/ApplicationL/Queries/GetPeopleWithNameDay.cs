@@ -6,53 +6,56 @@ using System.Text.Json;
 
 namespace ApplicationL.Queries
 {
-    public class GetPeopleWithNamesdays
+    public class GetPeopleWithNameDay
     {
         private IReadDataFile _readDataFile;
         private IReadCalendar _readCalendar;
-        public GetPeopleWithNamesdays(IReadDataFile readDataFile, IReadCalendar readCalendar)
+        public GetPeopleWithNameDay(IReadDataFile readDataFile, IReadCalendar readCalendar)
         {
             _readDataFile = readDataFile;
             _readCalendar = readCalendar;
         }
 
-        public IEnumerable<PersonDto> PeopleWithNamesdays()
+        public IEnumerable<PersonDto> PeopleWithNameDay()
         {
+            //Data známych
             var fileData = _readDataFile.ReadData();
             IEnumerable<Person> allPeople = null;
             if (fileData != String.Empty) { allPeople = JsonSerializer.Deserialize<Person[]>(fileData); }
 
+            //Dáta z kalendára
             var calendarData = _readCalendar.ReadCaledarData();
             IEnumerable<Calendar> calendarDays = null;
             if (calendarData != String.Empty) { calendarDays = JsonSerializer.Deserialize<Calendar[]>(calendarData); }
 
             Queue<Calendar> calendarQueue = new Queue<Calendar>();
 
-            foreach (var namesDay in calendarDays)
+            //Ak v jednom dátume je viacero mien, týmto je dátum pridelený jednotlivo
+            foreach (var nameDay in calendarDays)
             {
-                if (namesDay.Name.Contains(","))
+                if (nameDay.Name.Contains(","))
                 {
-                    string[] separatedNames = namesDay.Name.Split(',');
+                    string[] separatedNames = nameDay.Name.Split(',');
                     foreach (var singleName in separatedNames)
                     {
                         Calendar calendarDay = new Calendar();
                         calendarDay.Name = singleName.Trim();
-                        calendarDay.Month = namesDay.Month;
-                        calendarDay.Day = namesDay.Day;
+                        calendarDay.Month = nameDay.Month;
+                        calendarDay.Day = nameDay.Day;
                         calendarQueue.Enqueue(calendarDay);
                     }
                 }
                 else
                 {
-                    calendarQueue.Enqueue(namesDay);
+                    calendarQueue.Enqueue(nameDay);
                 }
             }
 
             calendarDays = calendarQueue;
 
-            var peopleWithNamesday = from person in allPeople
-                                     join day in calendarDays on person.Name equals day.Name into namesDays
-                                     from namesDay in namesDays.DefaultIfEmpty()
+            var peopleWithNameDay = from person in allPeople
+                                     join day in calendarDays on person.Name equals day.Name into nameDays
+                                     from nameDay in nameDays.DefaultIfEmpty()
                                      select new PersonDto
                                      {
                                          Id = person.Id,
@@ -61,10 +64,11 @@ namespace ApplicationL.Queries
                                          NickName = person.NickName,
                                          Suffix = person.Suffix,
                                          DateOfBirth = person.DateOfBirth,
-                                         NamesdayDate = namesDay == null ? string.Empty : $"{namesDay.Day}.{namesDay.Month}.",
+                                         NameDayMonth = nameDay?.Month ?? null,
+                                         NameDayDay = nameDay?.Day ?? null,
                                      };
 
-            return peopleWithNamesday;
+            return peopleWithNameDay;
         }
     }
 }

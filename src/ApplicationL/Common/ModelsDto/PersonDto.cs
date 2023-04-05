@@ -4,6 +4,7 @@ namespace ApplicationL.Common.ModelsDto
 {
     public record class PersonDto : Person
     {
-        public string? NamesdayDate { get; set; }
+        public int? NameDayMonth { get; set; }
+        public int? NameDayDay { get; set; }
     }
 }

@@ -21,6 +21,7 @@ namespace NarodeninyMeninyTesty.UnitTests.Pages
         public NewPersonTests()
         {
             readDataFile = new ReadDataFile();
+            mock = new Mock<IWriteDataFile>();
         }
 
             [TestMethod]
