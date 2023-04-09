@@ -24,7 +24,7 @@ namespace NarodeninyMeninyTesty.UnitTests.ApplicatonL.Queries
         [TestMethod]
         public void GetHappyPeople()
         {
-            var calendarFileName = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "data", "Calendar.json");
+            var calendarFileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NarodeninyMeniny", "Calendar.json");
 
             var calendarData = File.ReadAllText(calendarFileName, Encoding.UTF8);
 

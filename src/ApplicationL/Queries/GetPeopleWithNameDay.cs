@@ -20,8 +20,11 @@ namespace ApplicationL.Queries
         {
             //Data známych
             var fileData = _readDataFile.ReadData();
+            
+            if (fileData == String.Empty) return null;
+
             IEnumerable<Person> allPeople = null;
-            if (fileData != String.Empty) { allPeople = JsonSerializer.Deserialize<Person[]>(fileData); }
+            allPeople = JsonSerializer.Deserialize<Person[]>(fileData);
 
             //Dáta z kalendára
             var calendarData = _readCalendar.ReadCaledarData();
@@ -54,19 +57,19 @@ namespace ApplicationL.Queries
             calendarDays = calendarQueue;
 
             var peopleWithNameDay = from person in allPeople
-                                     join day in calendarDays on person.Name equals day.Name into nameDays
-                                     from nameDay in nameDays.DefaultIfEmpty()
-                                     select new PersonDto
-                                     {
-                                         Id = person.Id,
-                                         Name = person.Name,
-                                         Surname = person.Surname,
-                                         NickName = person.NickName,
-                                         Suffix = person.Suffix,
-                                         DateOfBirth = person.DateOfBirth,
-                                         NameDayMonth = nameDay?.Month ?? null,
-                                         NameDayDay = nameDay?.Day ?? null,
-                                     };
+                                    join day in calendarDays on person.Name equals day.Name into nameDays
+                                    from nameDay in nameDays.DefaultIfEmpty()
+                                    select new PersonDto
+                                    {
+                                        Id = person.Id,
+                                        Name = person.Name,
+                                        Surname = person.Surname,
+                                        NickName = person.NickName,
+                                        Suffix = person.Suffix,
+                                        DateOfBirth = person.DateOfBirth,
+                                        NameDayMonth = nameDay?.Month ?? null,
+                                        NameDayDay = nameDay?.Day ?? null,
+                                    };
 
             return peopleWithNameDay;
         }

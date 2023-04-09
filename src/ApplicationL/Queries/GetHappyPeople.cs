@@ -33,19 +33,22 @@ namespace ApplicationL.Queries
             var getPeopleWithNameDay = new GetPeopleWithNameDay(_readDataFile, _readCalendar);
             var peopleWithNameDay = getPeopleWithNameDay.PeopleWithNameDay();
 
+            if (peopleWithNameDay == null) return null;
+
+
             var selectedPeople = peopleWithNameDay.Where(x => sevenDates.Contains((x.DateOfBirth.Month, x.DateOfBirth.Day)) || sevenDates.Contains((x.NameDayMonth ?? 0, x.NameDayDay ?? 0)));
 
             //Transform PersonDto to HappyPersonDto
             var happyPeople = from selectedPerson in selectedPeople
-                              let birthday = sevenDates.Contains((selectedPerson.DateOfBirth.Month, selectedPerson.DateOfBirth.Day)) ? "Birthday" : string.Empty
-                              let nameDay = sevenDates.Contains((selectedPerson.NameDayMonth ?? 0, selectedPerson.NameDayDay ?? 0)) ? "Name Day" : string.Empty
+                              let birthday = sevenDates.Contains((selectedPerson.DateOfBirth.Month, selectedPerson.DateOfBirth.Day)) ? "Narodeniny" : string.Empty
+                              let nameDay = sevenDates.Contains((selectedPerson.NameDayMonth ?? 0, selectedPerson.NameDayDay ?? 0)) ? "Meniny" : string.Empty
                               select new HappyPersonDto
                               {
                                   Name = selectedPerson.Name,
                                   Surname = selectedPerson.Surname,
                                   NickName = selectedPerson.NickName,
                                   Suffix = selectedPerson.Suffix,
-                                  HolidayType = birthday.Length > 0 && nameDay.Length > 0 ? birthday + " and " + nameDay : birthday + nameDay,
+                                  HolidayType = birthday.Length > 0 && nameDay.Length > 0 ? birthday + " a " + nameDay : birthday + nameDay,
                                   AdditionalNote = birthday.Length > 0 ? selectedPerson.DateOfBirth.Day + "." + selectedPerson.DateOfBirth.Month + "." :
                                                                          selectedPerson.NameDayMonth + "." + selectedPerson.NameDayDay + ".",
                               };

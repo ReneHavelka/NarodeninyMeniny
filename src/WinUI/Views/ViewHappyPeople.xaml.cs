@@ -1,13 +1,13 @@
 ﻿using ApplicationL.Common.Interfaces;
 using ApplicationL.Queries;
 using Infrastructure;
+using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Windows;
 
 namespace WinUI.Views
 {
-    /// <summary>
-    /// Interaction logic for BrithdayNameDayPerson.xaml
-    /// </summary>
     public partial class ViewHappyPeople : Window
     {
         IReadDataFile _readDataFile;
@@ -25,6 +25,8 @@ namespace WinUI.Views
         {
             var getHappyPeople = new GetHappyPeople(_readDataFile, _readCalendar);
             var happyPeople = getHappyPeople.HappyPeople();
+
+            if (happyPeople.Count() == 0) { Application.Current.Shutdown(); };
 
             DataContext = happyPeople;
         }

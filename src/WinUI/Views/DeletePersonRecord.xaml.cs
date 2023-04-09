@@ -7,9 +7,6 @@ using System.Windows;
 
 namespace WinUI.Views
 {
-    /// <summary>
-    /// Interaction logic for DeletePersonRecord.xaml
-    /// </summary>
     public partial class DeletePersonRecord : Window
     {
         IReadDataFile _readDataFile;

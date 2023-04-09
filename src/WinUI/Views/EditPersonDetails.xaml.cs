@@ -10,9 +10,6 @@ using System.Windows.Controls;
 
 namespace WinUI.Views
 {
-    /// <summary>
-    /// Interaction logic for EditPersonDetails.xaml
-    /// </summary>
     public partial class EditPersonDetails : Window
     {
         IReadDataFile _readDataFile;
