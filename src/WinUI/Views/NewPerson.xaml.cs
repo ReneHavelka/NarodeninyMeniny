@@ -27,6 +27,9 @@ namespace WinUI.Views
             var personValidator = new PersonValidator(Person);
             string validationResult = personValidator.PersonValidate(Person);
 
+            var dateOfBirthValidator = new DateOfBirthValidator(dateOfBirth.Text);
+            validationResult += dateOfBirthValidator.DateOfBirthValidate(dateOfBirth.Text);
+
             if (validationResult == String.Empty)
             {
                 var createPerson = new CreatePerson(_readDataFile, _writeDataFile);
@@ -46,6 +49,7 @@ namespace WinUI.Views
                 if (validationResult.Contains("Date too early")) dateOfBirthWarning.Text = "Dátum je nesprávny - príliš skorý.";
                 if (validationResult.Contains("No date")) dateOfBirthWarning.Text = "Dátum je povinný.";
                 if (validationResult.Contains("Date too late")) dateOfBirthWarning.Text = "Dátum je nesprávny - príliš neskorý.";
+                if (validationResult.Contains("Incorrect date format")) dateOfBirthWarning.Text = "Dátum je v nesprávnom formáte.";
             }
         }
 

@@ -26,10 +26,7 @@ namespace ApplicationL.Queries
             IEnumerable<Person> allPeople = null;
             allPeople = JsonSerializer.Deserialize<Person[]>(fileData);
 
-            //Dáta z kalendára
-            var calendarData = _readCalendar.ReadCaledarData();
-            IEnumerable<Calendar> calendarDays = null;
-            if (calendarData != String.Empty) { calendarDays = JsonSerializer.Deserialize<Calendar[]>(calendarData); }
+            var calendarDays = new GetCalendar(_readCalendar).CalendarDays();
 
             Queue<Calendar> calendarQueue = new Queue<Calendar>();
 

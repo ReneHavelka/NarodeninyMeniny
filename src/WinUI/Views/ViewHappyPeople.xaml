@@ -76,10 +76,10 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
 
-                        <DataGridTemplateColumn Header="Deň">
+                        <DataGridTemplateColumn Header="Sviatočný deň">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <TextBlock Text="{Binding AdditionalNote}" Style="{StaticResource ColumnTextBlockStyle2}"/>
+                                    <TextBlock Text="{Binding AdditionalNote}" Style="{StaticResource ColumnTextBlockStyle1}"/>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>

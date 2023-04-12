@@ -1,6 +1,7 @@
 ﻿using ApplicationL.Common.Interfaces;
 using ApplicationL.Common.ModelsDto;
 using Domain.Entities;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 
@@ -17,41 +18,66 @@ namespace ApplicationL.Queries
             _readCalendar = readCalendar;
         }
 
-        public IEnumerable<HappyPersonDto> HappyPeople()
+        public IList<HappyPersonDto> HappyPeople()
         {
-            //7 dates incl. today: month, day
-            IList<(int, int)> sevenDates = new List<(int, int)>();
+            //happyPeople - 7 dní odo dnešného dňa včítane
+            IList<HappyPersonDto> happyPeople = new List<HappyPersonDto>();
+            var getPeopleWithNameDay = new GetPeopleWithNameDay(_readDataFile, _readCalendar);
+            var peopleWithNameDay = getPeopleWithNameDay.PeopleWithNameDay();
+            DateTime today = DateTime.Now;
 
             for (int i = 0; i < 7; ++i)
             {
-                var day = DateTime.Now.AddDays(i).Day;
-                var month = DateTime.Now.AddDays(i).Month;
-                sevenDates.Add((month, day));
+                var newDateTime = today.AddDays(i);
+                var month = newDateTime.Month;
+                var day = newDateTime.Day;
+                var selectedPeople = peopleWithNameDay.Where(x => (x.DateOfBirth.Month == month && x.DateOfBirth.Day == day) || (x.NameDayMonth == month && x.NameDayDay == day));
+
+                foreach (var selectedPerson in selectedPeople)
+                {
+                    HappyPersonDto happyPersonDto = new HappyPersonDto();
+                    happyPersonDto.Name = selectedPerson.Name;
+                    happyPersonDto.Surname = selectedPerson.Surname;
+                    happyPersonDto.NickName = selectedPerson.NickName;
+                    happyPersonDto.Suffix = selectedPerson.Suffix;
+
+                    switch (true)
+                    {
+                        case true when (selectedPerson.DateOfBirth.Month == month && selectedPerson.DateOfBirth.Day == day) && !(selectedPerson.NameDayMonth == month && selectedPerson.NameDayDay == day):
+                            happyPersonDto.HolidayType = "Narodeniny";
+                            break;
+                        case true when !(selectedPerson.DateOfBirth.Month == month && selectedPerson.DateOfBirth.Day == day) && (selectedPerson.NameDayMonth == month && selectedPerson.NameDayDay == day):
+                            happyPersonDto.HolidayType = "Meniny";
+                            break;
+                        case true when (selectedPerson.DateOfBirth.Month == month && selectedPerson.DateOfBirth.Day == day) && (selectedPerson.NameDayMonth == month && selectedPerson.NameDayDay == day):
+                            happyPersonDto.HolidayType = "Narodeniny a Meniny";
+                            break;
+                    }
+
+                    switch (i)
+                    {
+                        case 0:
+                            happyPersonDto.AdditionalNote = $"{day}.{month}. - dnes";
+                            break;
+                        case 1:
+                            happyPersonDto.AdditionalNote = $"{day}.{month}. - zajtra";
+                            break;
+                        case 2:
+                            happyPersonDto.AdditionalNote = $"{day}.{month}. - pozajtra";
+                            break;
+                        case 3:
+                        case 4:
+                            happyPersonDto.AdditionalNote = $"{day}.{month}. - o {i} dni";
+                            break;
+                        case > 4:
+                            happyPersonDto.AdditionalNote = $"{day}.{month}. - o {i} dní";
+                            break;
+                    }
+                    happyPeople.Add(happyPersonDto); 
+                }
             }
-
-            //People with birthdays within 7 dates
-            var getPeopleWithNameDay = new GetPeopleWithNameDay(_readDataFile, _readCalendar);
-            var peopleWithNameDay = getPeopleWithNameDay.PeopleWithNameDay();
-
-            if (peopleWithNameDay == null) return null;
-
-
-            var selectedPeople = peopleWithNameDay.Where(x => sevenDates.Contains((x.DateOfBirth.Month, x.DateOfBirth.Day)) || sevenDates.Contains((x.NameDayMonth ?? 0, x.NameDayDay ?? 0)));
-
-            //Transform PersonDto to HappyPersonDto
-            var happyPeople = from selectedPerson in selectedPeople
-                              let birthday = sevenDates.Contains((selectedPerson.DateOfBirth.Month, selectedPerson.DateOfBirth.Day)) ? "Narodeniny" : string.Empty
-                              let nameDay = sevenDates.Contains((selectedPerson.NameDayMonth ?? 0, selectedPerson.NameDayDay ?? 0)) ? "Meniny" : string.Empty
-                              select new HappyPersonDto
-                              {
-                                  Name = selectedPerson.Name,
-                                  Surname = selectedPerson.Surname,
-                                  NickName = selectedPerson.NickName,
-                                  Suffix = selectedPerson.Suffix,
-                                  HolidayType = birthday.Length > 0 && nameDay.Length > 0 ? birthday + " a " + nameDay : birthday + nameDay,
-                                  AdditionalNote = birthday.Length > 0 ? selectedPerson.DateOfBirth.Day + "." + selectedPerson.DateOfBirth.Month + "." :
-                                                                         selectedPerson.NameDayMonth + "." + selectedPerson.NameDayDay + ".",
-                              };
+            
+            
 
             return happyPeople;
         }

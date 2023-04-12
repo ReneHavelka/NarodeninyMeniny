@@ -5,6 +5,8 @@ using ApplicationL.Queries;
 using Domain.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -42,9 +44,11 @@ namespace WinUI.Views
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
             var personValidator = new PersonValidator(Person);
             string validationResult = personValidator.PersonValidate(Person);
+
+            var dateOfBirthValidator = new DateOfBirthValidator(dateOfBirth.Text);
+            validationResult += dateOfBirthValidator.DateOfBirthValidate(dateOfBirth.Text);
 
             if (validationResult == String.Empty)
             {
@@ -65,6 +69,7 @@ namespace WinUI.Views
                 if (validationResult.Contains("Date too early")) dateOfBirthWarning.Text = "Dátum je nesprávny - príliš skorý.";
                 if (validationResult.Contains("No date")) dateOfBirthWarning.Text = "Dátum je povinný.";
                 if (validationResult.Contains("Date too late")) dateOfBirthWarning.Text = "Dátum je nesprávny - príliš neskorý.";
+                if (validationResult.Contains("Incorrect date format")) dateOfBirthWarning.Text = "Dátum je v nesprávnom formáte.";
             }
         }
 

@@ -49,8 +49,8 @@
                  GotFocus="GotFocus"/>
             <TextBox Text="{Binding NickName}" Grid.Column="2" Grid.Row="4" MinWidth="100" Width="Auto" HorizontalAlignment="Left" Margin="5,10,0,0"/>
             <TextBox Text="{Binding Suffix}" Grid.Column="2" Grid.Row="5" MinWidth="100" Width="Auto" HorizontalAlignment="Left" Margin="5,10,0,0"/>
-            <TextBox x:Name="dateOfBirth" Text="{Binding DateOfBirth, ConverterCulture='sk-Sk'}" Grid.Column="2" Grid.Row="6" MinWidth="100" Width="Auto" HorizontalAlignment="Left" Margin="5,10,0,0"
-                 GotFocus="GotFocus"/>
+            <TextBox x:Name="dateOfBirth" Text="{Binding DateOfBirth, ConverterCulture='sk-Sk'}" Grid.Column="2" Grid.Row="6" MinWidth="100" Width="Auto" 
+                     HorizontalAlignment="Left" Margin="5,10,0,0" GotFocus="GotFocus"/>
 
             <TextBlock x:Name="nameWarning"  Grid.Column="3" Grid.Row="2" Foreground="Red" HorizontalAlignment="Left" Margin="5,10,0,0"/>
             <TextBlock x:Name="surnameWarning" Grid.Column="3" Grid.Row="3" Foreground="Red" HorizontalAlignment="Left" Margin="5,10,0,0"/>
