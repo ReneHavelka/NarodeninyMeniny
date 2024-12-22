@@ -1,7 +1,7 @@
 ﻿namespace ApplicationL.Common.Interfaces
 {
-	public interface IReadCalendar
-	{
-		public string ReadCaledarData();
-	}
+    public interface IReadCalendar
+    {
+        public string ReadCaledarData();
+    }
 }

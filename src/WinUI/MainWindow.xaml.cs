@@ -8,63 +8,63 @@ using WinUI.Views;
 
 namespace WinUI
 {
-	public partial class MainWindow : Window
-	{
-		private IReadDataFile readDataFile;
-		private IReadCalendar readCalendar;
-		private IWriteDataFile writeDataFile;
+    public partial class MainWindow : Window
+    {
+        private IReadDataFile readDataFile;
+        private IReadCalendar readCalendar;
+        private IWriteDataFile writeDataFile;
 
-		public MainWindow()
-		{
-			readDataFile = new ReadDataFile();
-			writeDataFile = new WriteDataFile();
-			readCalendar = new ReadCalendar();
+        public MainWindow()
+        {
+            readDataFile = new ReadDataFile();
+            writeDataFile = new WriteDataFile();
+            readCalendar = new ReadCalendar();
 
-			SetDataContext();
-			InitializeComponent();
-		}
+            SetDataContext();
+            InitializeComponent();
+        }
 
-		private void SetDataContext()
-		{
-			var getAllPeople = new GetPeopleWithNameDay(readDataFile, readCalendar).PeopleWithNameDay();
+        private void SetDataContext()
+        {
+            var getAllPeople = new GetPeopleWithNameDay(readDataFile, readCalendar).PeopleWithNameDay();
 
-			DataContext = getAllPeople;
-		}
+            DataContext = getAllPeople;
+        }
 
-		internal void Button_Click_HappyPerson(object sender, RoutedEventArgs e)
-		{
-			var happyPerson = new ViewHappyPeople(readDataFile, readCalendar);
-			happyPerson.Show();
-			this.Close();
-		}
+        internal void Button_Click_HappyPerson(object sender, RoutedEventArgs e)
+        {
+            var happyPerson = new ViewHappyPeople(readDataFile, readCalendar);
+            happyPerson.Show();
+            this.Close();
+        }
 
-		private void Button_Click_NewPerson(object sender, RoutedEventArgs e)
-		{
-			var newPerson = new NewPerson(readDataFile, writeDataFile);
-			newPerson.Show();
-			this.Close();
-		}
+        private void Button_Click_NewPerson(object sender, RoutedEventArgs e)
+        {
+            var newPerson = new NewPerson(readDataFile, writeDataFile);
+            newPerson.Show();
+            this.Close();
+        }
 
-		private void Button_Click_Edit(object sender, RoutedEventArgs e)
-		{
-			var frameworkElement = (FrameworkElement)e.OriginalSource;
-			var person = (PersonDto)frameworkElement.DataContext;
-			var id = person.Id;
+        private void Button_Click_Edit(object sender, RoutedEventArgs e)
+        {
+            var frameworkElement = (FrameworkElement)e.OriginalSource;
+            var person = (PersonDto)frameworkElement.DataContext;
+            var id = person.Id;
 
-			var editPersonDetails = new EditPersonDetails(readDataFile, writeDataFile, id);
-			editPersonDetails.Show();
-			this.Close();
-		}
+            var editPersonDetails = new EditPersonDetails(readDataFile, writeDataFile, id);
+            editPersonDetails.Show();
+            this.Close();
+        }
 
-		private void Button_Click_Delete(object sender, RoutedEventArgs e)
-		{
-			var frameworkElement = (FrameworkElement)e.OriginalSource;
-			var person = (Person)frameworkElement.DataContext;
-			var id = person.Id;
+        private void Button_Click_Delete(object sender, RoutedEventArgs e)
+        {
+            var frameworkElement = (FrameworkElement)e.OriginalSource;
+            var person = (Person)frameworkElement.DataContext;
+            var id = person.Id;
 
-			var deletePersonRecord = new DeletePersonRecord(readDataFile, writeDataFile, id);
-			deletePersonRecord.Show();
-			this.Close();
-		}
-	}
+            var deletePersonRecord = new DeletePersonRecord(readDataFile, writeDataFile, id);
+            deletePersonRecord.Show();
+            this.Close();
+        }
+    }
 }
