@@ -6,13 +6,11 @@ namespace ApplicationL.Commands
 {
     public class UpdatePersonDetails
     {
-        IReadDataFile _readDataFile;
         IWriteDataFile _writeDataFile;
         int _id;
 
-        public UpdatePersonDetails(IReadDataFile readDataFile, IWriteDataFile writeDataFile, int id)
+        public UpdatePersonDetails(IWriteDataFile writeDataFile, int id)
         {
-            _readDataFile = readDataFile;
             _writeDataFile = writeDataFile;
             _id = id;
         }

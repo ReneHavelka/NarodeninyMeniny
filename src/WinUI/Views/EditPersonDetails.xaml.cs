@@ -52,7 +52,7 @@ namespace WinUI.Views
 
             if (validationResult == String.Empty)
             {
-                var updatePerson = new UpdatePersonDetails(_readDataFile, _writeDataFile, _id);
+                var updatePerson = new UpdatePersonDetails(_writeDataFile, _id);
                 updatePerson.WriteToFile(Person, _allPeople);
 
                 var mainWindow = new MainWindow();
