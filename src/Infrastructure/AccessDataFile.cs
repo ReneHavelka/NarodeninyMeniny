@@ -1,24 +1,22 @@
-﻿using System.Diagnostics;
-
-namespace Infrastructure
+﻿namespace Infrastructure
 {
-    internal class AccessDataFile
-    {
-        internal string GetFileName()
-        {
+	internal class AccessDataFile
+	{
+		internal string GetFileName()
+		{
 			//var dataFileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NarodeninyMeniny", "birthnamedays.json");
 			//var dataFileName = System.IO.Path.Combine(@"C:\Users\Public\NarodeninyMeniny", "birthnamedays.json");
 			var dataFileName = "birthnamedays.json";
 			//var directory = Path.GetDirectoryName(dataFileName);
 
-   //         if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
-   //         if (!Path.Exists(dataFileName)) File.Create(dataFileName).Dispose();
+			//         if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+			//         if (!Path.Exists(dataFileName)) File.Create(dataFileName).Dispose();
 
-            return dataFileName;
-        }
+			return dataFileName;
+		}
 
-        internal string GetCalendarFileName()
-        {
+		internal string GetCalendarFileName()
+		{
 			//var calendarFileName = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "NarodeninyMeniny", "Calendar.json");
 			//var calendarFileName = System.IO.Path.Combine(@"C:\Users\Public\NarodeninyMeniny", "Calendar.json");
 
@@ -27,6 +25,6 @@ namespace Infrastructure
 			var calendarFileName = "Calendar.json";
 
 			return calendarFileName;
-        }
-    }
+		}
+	}
 }
