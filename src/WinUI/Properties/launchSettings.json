@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WinUI": {
+      "commandName": "Project",
+      "commandLineArgs": "list"
+    }
+  }
+}
